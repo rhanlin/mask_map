@@ -3,7 +3,7 @@
 //先訂位center座標，zoom定位在16
 var map = L.map('map', {
   center: [24.9838876,121.4899229],
-  zoom: 16
+  zoom: 30
 });
 //加入使用的圖資
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

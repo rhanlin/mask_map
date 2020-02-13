@@ -1,0 +1,127 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 16px;
+}
+
+html header, body header {
+  width: 100%;
+  height: auto;
+  background: #fff;
+  position: fixed;
+  z-index: 99;
+}
+
+html .logo, body .logo {
+  display: inline-block;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 1px solid green;
+}
+
+html .logo h1, body .logo h1 {
+  border: 1px solid red;
+  font-weight: normal;
+  font-size: 3rem;
+  margin-left: 3rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+html .logo h1::before, body .logo h1::before {
+  content: "";
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  background-image: url(../img/logo@2x.png);
+  background-position: center;
+  background-size: cover;
+  margin-right: 16px;
+}
+
+html .logo .ham, body .logo .ham {
+  width: 8%;
+  height: auto;
+  border: 1px solid red;
+  position: absolute;
+  right: 3rem;
+  text-align: right;
+  font-size: 0;
+}
+
+html .logo .ham span, body .logo .ham span {
+  display: inline-block;
+  height: 10px;
+  background-color: #aaa;
+}
+
+html .logo .ham span:nth-child(1), body .logo .ham span:nth-child(1) {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+html .logo .ham span:nth-child(2), body .logo .ham span:nth-child(2) {
+  width: 60%;
+}
+
+html #map, body #map {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.marker-cluster-small {
+  background-color: rgba(181, 226, 140, 0.6);
+}
+
+.marker-cluster-small div {
+  background-color: rgba(110, 204, 57, 0.6);
+}
+
+.marker-cluster-medium {
+  background-color: rgba(241, 211, 87, 0.6);
+}
+
+.marker-cluster-medium div {
+  background-color: rgba(240, 194, 12, 0.6);
+}
+
+.marker-cluster-large {
+  background-color: rgba(253, 156, 115, 0.6);
+}
+
+.marker-cluster-large div {
+  background-color: rgba(241, 128, 23, 0.6);
+}
+
+.marker-cluster {
+  background-clip: padding-box;
+  border-radius: 20px;
+}
+
+.marker-cluster div {
+  width: 30px;
+  height: 30px;
+  margin-left: 5px;
+  margin-top: 5px;
+  text-align: center;
+  border-radius: 15px;
+  font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+.marker-cluster span {
+  line-height: 30px;
+}
+/*# sourceMappingURL=main.css.map */
