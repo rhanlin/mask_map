@@ -1,108 +1,393 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+TC:100,300,400,500,700,900&display=swap&subset=chinese-traditional');
 
-html,body{
-  width: 100%;
-  height: 100%;
-  font-family: 'Noto Sans TC', sans-serif;
-  font-size: 16px;
-  header{
-    width: 100%;
-    height: auto;
-    background: #fff;
-    position: fixed;
-    z-index: 99;
+$white: #FFFFFF;
+$blue: #73C0D8;
+$black:#333333;
+$yellow:#FFF126;
+$orange:#FFA573;
+$gray300:#D9D9D9;
+$gray600:#B2B2B2;
+$gray900:#666666;
+$shadow: rgba(0, 0, 0, .1);
+$text:$black;
+
+$fonts: (
+  h1: 60px,
+  h2: 35px,
+  h3: 20px,
+);
+
+@each $title , $size in $fonts {
+  #{$title} {
+      font-size: $size;
+  };
+};
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+}
+body, input, button{
+  font-family: 'Noto Sans TC', 'Roboto', sans-serif;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: $gray300;
+}
+::-webkit-scrollbar-thumb {
+  background: $orange;
+}
+body{
+  display: flex;
+}
+.side_nav{
+  width: 25%;
+  max-width: 500px;
+  min-width: 380px;
+  height: 100vh;
+  background-color: $white;
+  box-shadow: 1px 1px 3px $shadow;
+  &_header{
+    background-color: $blue;
+    // border: 1px solid red;
+    padding: .5rem 0;
   }
-  .logo {
-    display: inline-block;
-    width: 100%;
-    // padding: 3rem;
+  &_info{
+    // border: 1px solid red;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: .8rem 1rem;
+    color: $white;
+  }
+  & h2{
+    font-weight: 500;
+  }
+  &_date{
+    // border: 1px solid green;
+    text-align: right;
+    letter-spacing: 1px;
+    & p{
+      font-weight: 300;
+    }
+    & p:nth-child(1){
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    & p:nth-child(2){
+      font-size: .8rem;
+      span{
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: $yellow;
+      }
+    }
+  }
+  &_search{
+    // border: 1px solid black;
     display: flex;
     align-items: center;
-    border: 1px solid green;
-    
-    h1{
-      border: 1px solid red;
-      font-weight: normal;
-      font-size: 3rem;
-      margin-left: 3rem;
-      display: flex;
-      align-items: center;
-      &::before{
-        content: "";
-        display: inline-block;
-        width: 60px;
-        height: 60px;
-        background-image: url(../img/logo@2x.png);
-        background-position: center;
-        background-size: cover;
-        margin-right: 16px;
+    font-size: 0;
+    position: relative;
+    padding: .5rem .8rem;
+
+    #searchInput{
+      -webkit-appearance: none;
+      -moz-appearance: none;
+           appearance: none;
+      outline: 0;
+      border: 1px solid $white;
+      background-color: $white;
+      border-radius: 30px;
+      padding: 10px 15px;
+      // margin: 0 auto 10px auto;
+      display: block;
+      width: 100%;
+      height: 40px;
+      text-align: left;
+      font-size: 1rem;
+      color: $blue;
+      -webkit-transition-duration: 0.25s;
+              transition-duration: 0.25s;
+      font-weight: 300;
+      &:-webkit-input-placeholder { color: $gray600; }
+      &::-moz-placeholder { color: $gray600; }
+      &::-moz-placeholder{color:$gray600;}
+      &::placeholder{color: $gray600;}
+      &:hover{
+        color: $white;
+        background-color: rgba(255, 255, 255, 0.4);
+        &::placeholder{color: $white;}
+      }
+      &:focus {
+        background-color: white;
+        color: $blue;
+       
       }
     }
-    .ham{
-      width: 8%;
-      height: auto;
-      border: 1px solid red;
+    #searchBtn{
       position: absolute;
-      right: 3rem;
-      text-align: right;
-      font-size: 0;
-      span{
-        display: inline-block;
-        height: 10px;
-        background-color: #aaa;
-      }
-      span:nth-child(1){
+      right: 1.8rem;
+      width: 20px;
+      height: 20px;
+      background: transparent url('../img/searchIcon.svg') 0% 0% no-repeat padding-box;
+      background-position: center;
+      background-size: contain;
+      opacity: 1;
+      cursor: pointer;
+    }
+  }
+  &_select{
+    // border: 1px solid red;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 .8rem;
+  }
+  &_option{
+    width: 45%;
+    height: 35px;
+    border-radius: 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+          appearance: none;
+    outline: 0;
+    border: none;
+    background-color: $white;
+    cursor: pointer;
+    position: relative;
+    >div{
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: $gray900;
+      font-weight: 500;
+      letter-spacing: .2rem;
+    }
+    >ul{
+      visibility: hidden;
+      opacity: 0;
+      list-style: none;
+      width: 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 20px;
+      background-color: $white;
+      color: $text;
+      font-size: 14px;
+      line-height: 27px;
+      box-shadow: 1px 1px 3px $shadow;
+      transition: all .3s;
+      >li{
         width: 100%;
-        margin-bottom: 1rem;
+        color: $black;
+        font-weight: 500;
+        letter-spacing: .2rem;
+        cursor: pointer;
+        border-radius: 20px;
+        transition: background-color .3s;
+        &:hover {
+          background-color: $gray300;
+        }
+        &.active {
+          background-color: $orange;
+          color: $white;
+        }
       }
-      span:nth-child(2){
-        width: 60%;
+    }
+    &:hover {
+      >ul {
+        visibility: visible;
+        opacity: 1;
       }
     }
   }
-  #map {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
+  &_container{
+    padding: .5rem .5rem;
+    .side_nav_info{
+      width: 100%;
+      padding-bottom: 24px;
+      border-bottom: 1px solid $gray300;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      .info_title{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 1rem;
+        >h3{
+          color: $black;
+        }
+        >p{
+          color: $gray600;
+        }
+      }
+      .info{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        color: $gray900;
+        padding-bottom: 1rem;
+        >img{
+          margin-right: .5rem;
+        }
+      }
+      .mask_status{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        >div{
+          width: 45%;
+          height: 35px;
+          border-radius: 24px;
+          color: $text;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 500;
+          letter-spacing: 1px;
+          justify-content: space-around;
+          color: $white;
+          >span{
+            font-weight: 900;
+          }
+        }
+        
+      }
+      .adult {
+        background-color: $orange;
+        &.no_mask {
+          background-color: $gray600;
+        }
+      }
+      .child {
+        background-color: $blue;
+        &.no_mask {
+          background-color: $gray600;
+        }
+      }
+    }
+  }
+  
+}
+.container {
+  width: 100%;
+  height: 100vh;
+  .leaflet-popup-content{
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      width: 260px;
+      .info_title{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        // padding-bottom: 1rem;
+        >h3{
+          color: $black;
+        }
+        >p{
+          color: $gray600;
+        }
+      }
+      .info{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        color: $gray900;
+      }
+      .mask_status{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin: .5rem 0;
+        >div{
+          width: 45%;
+          height: 35px;
+          border-radius: 20px;
+          color: $text;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 500;
+          justify-content: space-around;
+          color: $white;
+          >span{
+            font-weight: 900;
+          }
+        }
+        
+      }
+      .adult {
+        background-color: $orange;
+        &.no_mask {
+          background-color: $gray600;
+        }
+      }
+      .child {
+        background-color: $blue;
+        &.no_mask {
+          background-color: $gray600;
+        }
+      }
   }
 }
 
+
+
+//Marker
 .marker-cluster-small {
 		background-color: rgba(181, 226, 140, 0.6);
 		}
-	.marker-cluster-small div {
-		background-color: rgba(110, 204, 57, 0.6);
-		}
+.marker-cluster-small div {
+  background-color: rgba(110, 204, 57, 0.6);
+  }
 
-	.marker-cluster-medium {
-		background-color: rgba(241, 211, 87, 0.6);
-		}
-	.marker-cluster-medium div {
-		background-color: rgba(240, 194, 12, 0.6);
-		}
+.marker-cluster-medium {
+  background-color: rgba(241, 211, 87, 0.6);
+  }
+.marker-cluster-medium div {
+  background-color: rgba(240, 194, 12, 0.6);
+  }
 
-	.marker-cluster-large {
-		background-color: rgba(253, 156, 115, 0.6);
-		}
-	.marker-cluster-large div {
-		background-color: rgba(241, 128, 23, 0.6);
-		}
-
-	.marker-cluster {
-		background-clip: padding-box;
-		border-radius: 20px;
-		}
-	.marker-cluster div {
-		width: 30px;
-		height: 30px;
-		margin-left: 5px;
-		margin-top: 5px;
-
-		text-align: center;
-		border-radius: 15px;
-		font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
-		}
-	.marker-cluster span {
-		line-height: 30px;
-		}
+.marker-cluster-large {
+  background-color: rgba(253, 156, 115, 0.6);
+  }
+.marker-cluster-large div {
+  background-color: rgba(241, 128, 23, 0.6);
+  }
+.marker-cluster {
+  background-clip: padding-box;
+  border-radius: 20px;
+}
+.marker-cluster div {
+  width: 30px;
+  height: 30px;
+  margin-left: 5px;
+  margin-top: 5px;
+  text-align: center;
+  border-radius: 15px;
+  font: 12px 'Noto Sans TC', 'Roboto', sans-serif;
+}
+.marker-cluster span {
+  line-height: 30px;
+  }
+.leaflet-container {
+    font: 12px/1.5 'Noto Sans TC', 'Roboto', sans-serif;
+}
+.leaflet-popup-content p{
+  margin: .3rem 0;
+  color: $gray900;
+}

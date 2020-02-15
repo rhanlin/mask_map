@@ -22,22 +22,28 @@ var greenIcon = new L.Icon({
 function getData(){
   return new Promise(function(resolve, reject){
     
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET","https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json");
-    xhr.onload = function(){
-      var data = JSON.parse(xhr.responseText).features
-      resolve(data)
-      // console.log(data);
-    }
-    xhr.onerror = function(){
-      reject("error!")
-    }
-    xhr.send();
+    // var xhr = new XMLHttpRequest();
+    // xhr.open("GET","https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json");
+    // xhr.onload = function(){
+    //   var data = JSON.parse(xhr.responseText).features
+    //   resolve(data)
+    //   // console.log(data);
+    // }
+    // xhr.onerror = function(){
+    //   reject("error!")
+    // }
+    // xhr.send();
+    fetch('https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json')
+        .then(res=>res.json())
+        .then(json=>resolve(json.features))
+        .catch(err=>console.log(err))
   })
 }
 
 let dataPromise = getData();
 dataPromise.then(function(data){
+  console.log(data);
+  
   var markers = new L.MarkerClusterGroup().addTo(map);
   for(let i =0;data.length>i;i++){
     markers.addLayer(
@@ -45,9 +51,24 @@ dataPromise.then(function(data){
       [data[i].geometry.coordinates[1],data[i].geometry.coordinates[0]], {icon: greenIcon}
       )
       .bindPopup(`
-        <h1>${data[i].properties.name}</h1>
-        <p>成人口罩：${data[i].properties.mask_adult}<br>
-        兒童口罩:${data[i].properties.mask_child}</p>
+        <div class="info_title">
+          <h3>${data[i].properties.name}</h3>
+          <p>約 752m</p>
+        </div>
+        <div class="info">
+          <p>${data[i].properties.address}</p>
+        </div>
+        <div class="info">
+          <p>${data[i].properties.phone}</p>
+        </div>
+        <div class="info">
+          <p>${data[i].properties.note}</p>
+        </div>
+        <div class="mask_status">
+          <div class="adult ${data[i].properties.mask_adult ? '' : 'no_mask'}">成人口罩 <span>${data[i].properties.mask_adult}</span></div>
+          <div class="child ${data[i].properties.mask_child ? '' : 'no_mask'}">兒童口罩 <span>${data[i].properties.mask_child}</span></div>
+        </div>
+        <p>最後更新 | ${data[i].properties.updated ? data[i].properties.updated : '暫無資料'}</p>
         `
       )
     );
@@ -59,3 +80,17 @@ dataPromise.then(function(data){
 }).catch(function(error){
   alert(error)
 })
+
+
+function getDateInfo(){
+  const dayInfo = ['日', '一', '二', '三', '四', '五', '六'];
+  let day = new Date().getDay();
+  document.getElementById('day').innerText = dayInfo[day];
+  document.getElementById('buyInfo').innerHTML = day === 0 
+  ? '全部<span>皆</span>可購買' 
+  : day % 2 === 0 
+  ? '身分證末碼為<span>2,4,6,8</span>可購買'
+  : '身分證末碼為<span>1,3,5,7,9</span>可購買'
+}
+
+getDateInfo();
