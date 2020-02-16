@@ -4,9 +4,9 @@
   let maskInfo = getMaskData();//口罩api資料
   const searchInput = document.getElementById('searchInput');
   const searchBtn = document.getElementById('searchBtn');
-  // console.log(maskInfo);
-  
-  // let dataPromise = getMaskData();
+
+
+  //渲染藥局資訊
   maskInfo.then(function(data){
     // console.log(data);
     var markers = new L.MarkerClusterGroup().addTo(map);
@@ -74,29 +74,26 @@
   searchInput.addEventListener('keyup', searchCustomStore);
   searchBtn.addEventListener('click', searchCustomStore);
 
+  //將自己定位置中
   function findMe(){
     searchInput.value = "";
     map.panTo([latitude, longitude], 16);
   }
 
-  //介s接口罩api
+  //介接口罩api
   function getMaskData(){
     return new Promise(function(resolve, reject){
-      // var xhr = new XMLHttpRequest();
-      // xhr.open("GET","https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json");
-      // xhr.onload = function(){
-      //   var data = JSON.parse(xhr.responseText).features
-      //   resolve(data)
-      //   // console.log(data);
-      // }
-      // xhr.onerror = function(){
-      //   reject("error!")
-      // }
-      // xhr.send();
-      fetch('https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json')
-          .then(res=>res.json())
-          .then(json=>resolve(json.features))
-          .catch(err=>console.log(err))
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET","https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json");
+      xhr.onload = function(){
+        var data = JSON.parse(xhr.responseText).features
+        resolve(data)
+        // console.log(data);
+      }
+      xhr.onerror = function(){
+        reject("error!")
+      }
+      xhr.send();
     })
   }
 
@@ -115,13 +112,6 @@
       let value = searchInput.value.trim();
       if(value){
         console.log(value);
-        showResult();
-        // setOptions()
-        // locationInfoProxy.data = filterMaskType(infoData).filter(({properties: {address, name}}) => {
-        //   return address.indexOf(value) !== -1 || name.indexOf(value) !== -1
-        // })
-        // let location = locationInfoProxy.data[0].geometry.coordinates
-        // map.panTo([location[1], location[0]], 16)
       }    
     }
   }
@@ -131,7 +121,7 @@
     let day = new Date().getDay();
     document.getElementById('day').innerText = dayInfo[day];
     document.getElementById('buyInfo').innerHTML = day === 0 
-    ? '全部<span>皆</span>可購買' 
+    ? '大家<span>都</span>可購買' 
     : day % 2 === 0 
     ? '身分證末碼為<span>2,4,6,8</span>可購買'
     : '身分證末碼為<span>1,3,5,7,9</span>可購買'
