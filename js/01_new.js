@@ -1,7 +1,7 @@
 (async function(){
   let [latitude, longitude] = await getPosition();//存目前位置座標
   let findMeBtn = document.querySelector('.return_position');//找到目前位置按鈕
-  let maskInfo = getMaskData();//口罩api資料
+  let maskInfo = await getMaskData();//口罩api資料
   const searchInput = document.getElementById('searchInput');
   const searchBtn = document.getElementById('searchBtn');
 
@@ -10,7 +10,7 @@
   maskInfo.then(function(data){
     // console.log(data);
     var markers = new L.MarkerClusterGroup().addTo(map);
-    for(let i =0;data.length>i;i++){
+    for(let i =0 ; data.length>i ; i++){
       markers.addLayer(
         L.marker(
         [data[i].geometry.coordinates[1],data[i].geometry.coordinates[0]], {icon: greenIcon}
@@ -112,6 +112,7 @@
       let value = searchInput.value.trim();
       if(value){
         console.log(value);
+        //...
       }    
     }
   }
