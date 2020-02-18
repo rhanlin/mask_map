@@ -56,7 +56,7 @@ body{
     // border: 1px solid red;
     padding: .5rem 0;
   }
-  &_info{
+  &_info_header{
     // border: 1px solid red;
     display: flex;
     justify-content: space-around;
@@ -211,6 +211,8 @@ body{
   }
   &_container{
     padding: .5rem .5rem;
+    overflow-y: auto;
+    height: calc(100% - 188.6px);
     .side_nav_info{
       width: 100%;
       padding-bottom: 24px;
