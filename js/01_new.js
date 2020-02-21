@@ -41,7 +41,7 @@
     searchInput.value = "";
     map.panTo([latitude, longitude], 16);
     markers = showNearStore(latitude, longitude);
-    console.log(markers);
+    // console.log(markers);
     
     getMarkers(markers);
     getSildInfo(markers);
@@ -97,7 +97,7 @@
       xhr.onload = function(){
         var data = JSON.parse(xhr.responseText).features
         resolve(data)
-        console.log(data);
+        // console.log(data);
       }
       xhr.onerror = function(){
         reject("error!")
